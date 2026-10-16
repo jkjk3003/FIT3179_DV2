@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 400,
+  "title": "Private House Approvals Comparison: NSW vs. VIC (1983–2026)",
+  "data": {
+    "url": "cleaned_abs_houses.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.State == 'New South Wales' || datum.State == 'Victoria'"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "Date",
+      "type": "temporal",
+      "title": "Year",
+      "axis": {"grid": false}
+    },
+    "y": {
+      "field": "Count",
+      "type": "quantitative",
+      "title": "Monthly House Approvals",
+      "axis": {"grid": true}
+    },
+    "color": {
+      "field": "State",
+      "type": "nominal",
+      "title": "State",
+      "scale": {
+        "domain": ["New South Wales", "Victoria"],
+        "range": ["#1f77b4", "#e377c2"]
+      }
+    },
+    "tooltip": [
+      {"field": "State", "type": "nominal", "title": "State"},
+      {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
+      {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "Architectural Styles of Australian Heritage Buildings",
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": [-134, 0, 0]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "australia_states.json",
+        "format": {
+          "type": "topojson",
+          "feature": "STE_2016_AUST"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e0e0e0",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "wikidata_heritage_styles.csv"
+      },
+      "mark": {
+        "type": "circle",
+        "size": 50,
+        "opacity": 0.8,
+        "stroke": "black",
+        "strokeWidth": 0.5
+      },
+      "transform": [
+        {
+          "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
+          "as": "Broad_Style"
+        }
+      ],
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Broad_Style",
+          "type": "nominal",
+          "title": "Architectural Era"
+        },
+        "tooltip": [
+          {"field": "buildingLabel", "type": "nominal", "title": "Building Name"},
+          {"field": "styleLabel", "type": "nominal", "title": "Style"},
+          {"field": "year", "type": "quantitative", "title": "Year Built"}
+        ]
+      }
+    }
+  ]
+}

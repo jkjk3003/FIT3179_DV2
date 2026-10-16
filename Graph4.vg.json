@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Private House Approvals by State (1983-2026)",
+  "data": {"url": "cleaned_abs_houses.csv"},
+  "mark": {
+    "type": "area",
+    "line": {"color": "#1f77b4"},
+    "color": {
+      "x1": 1, "y1": 1,
+      "x2": 1, "y2": 0,
+      "gradient": "linear",
+      "stops": [
+        {"offset": 0, "color": "white"},
+        {"offset": 1, "color": "#1f77b4"}
+      ]
+    }
+  },
+  "encoding": {
+    "facet": {
+      "field": "State",
+      "type": "nominal",
+      "columns": 4,
+      "title": null,
+      "header": {"labelFontSize": 12, "labelFontWeight": "bold"}
+    },
+    "x": {
+      "field": "Date",
+      "type": "temporal",
+      "title": "Year",
+      "axis": {"grid": false}
+    },
+    "y": {
+      "field": "Count",
+      "type": "quantitative",
+      "title": "Number of Houses",
+      "axis": {"grid": true}
+    },
+    "tooltip": [
+      {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
+      {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
+    ]
+  },
+  "resolve": {
+    "scale": {"y": "independent"}
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "Density of Historic Heritage Sites (per 100,000 residents)",
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": [-134, 0, 0]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "australia_states.json",
+        "format": {
+          "type": "topojson",
+          "feature": "STE_2016_AUST"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eeeeee",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"
+        },
+        {
+          "aggregate": [{"op": "count", "as": "Building_Count"}],
+          "groupby": ["STATE"]
+        },
+        {
+          "lookup": "STATE",
+          "from": {
+            "data": {
+              "values": [
+                {"STATE": "NSW", "Population": 8337700, "Full_Name": "New South Wales"},
+                {"STATE": "VIC", "Population": 6812500, "Full_Name": "Victoria"},
+                {"STATE": "QLD", "Population": 5458000, "Full_Name": "Queensland"},
+                {"STATE": "SA",  "Population": 1851200, "Full_Name": "South Australia"},
+                {"STATE": "WA",  "Population": 2878600, "Full_Name": "Western Australia"},
+                {"STATE": "TAS", "Population": 573300,  "Full_Name": "Tasmania"},
+                {"STATE": "NT",  "Population": 252500,  "Full_Name": "Northern Territory"},
+                {"STATE": "ACT", "Population": 466800,  "Full_Name": "Australian Capital Territory"}
+              ]
+            },
+            "key": "STATE",
+            "fields": ["Population", "Full_Name"]
+          }
+        },
+        {
+          "calculate": "(datum.Building_Count / datum.Population) * 100000",
+          "as": "Sites_per_100k"
+        },
+        {
+          "lookup": "Full_Name",
+          "from": {
+            "data": {
+              "url": "australia_states.json",
+              "format": {
+                "type": "topojson",
+                "feature": "STE_2016_AUST"
+              }
+            },
+            "key": "properties.STE_NAME16"
+          },
+          "as": "geo"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "Sites_per_100k",
+          "type": "quantitative",
+          "title": "Sites per 100k People",
+          "scale": {"scheme": "oranges"}
+        },
+        "tooltip": [
+          {"field": "Full_Name", "type": "nominal", "title": "State/Territory"},
+          {"field": "Building_Count", "type": "quantitative", "title": "Total Historic Sites"},
+          {"field": "Population", "type": "quantitative", "title": "Population", "format": ","},
+          {"field": "Sites_per_100k", "type": "quantitative", "title": "Sites per 100k", "format": ".2f"}
+        ]
+      }
+    }
+  ]
+}

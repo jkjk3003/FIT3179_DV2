@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 300,
+  "title": "Heritage Buildings Built by Century",
+  "data": {
+    "url": "wikidata_heritage_styles.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.year >= 1800 && datum.year <= 1999"
+    },
+    {
+      "calculate": "datum.year < 1900 ? '19th Century (1800s)' : '20th Century (1900s)'",
+      "as": "Century"
+    }
+  ],
+  "mark": {
+    "type": "arc",
+    "innerRadius": 70,
+    "stroke": "#fff",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "theta": {
+      "aggregate": "count",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "Century",
+      "type": "nominal",
+      "title": "Era Built",
+      "scale": {"scheme": "dark2"}
+    },
+    "tooltip": [
+      {"field": "Century", "type": "nominal", "title": "Era"},
+      {"aggregate": "count", "type": "quantitative", "title": "Total Buildings"}
+    ]
+  }
+}

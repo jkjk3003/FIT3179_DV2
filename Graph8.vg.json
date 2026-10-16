@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 300,
+  "title": "Construction Density of Architectural Styles by Decade",
+  "data": {
+    "url": "wikidata_heritage_styles.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.year >= 1800 && datum.year <= 2000"
+    },
+    {
+      "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
+      "as": "Broad_Style"
+    },
+    {
+      "bin": {"step": 10},
+      "field": "year",
+      "as": "Decade"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "Decade",
+      "type": "ordinal",
+      "title": "Decade Built"
+    },
+    "y": {
+      "field": "Broad_Style",
+      "type": "nominal",
+      "title": "Architectural Era"
+    },
+    "color": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Buildings Built",
+      "scale": {"scheme": "tealblues"}
+    },
+    "tooltip": [
+      {"field": "Decade", "type": "ordinal", "title": "Decade"},
+      {"field": "Broad_Style", "type": "nominal", "title": "Style"},
+      {"aggregate": "count", "type": "quantitative", "title": "Number of Buildings"}
+    ]
+  }
+}

@@ -8,6 +8,17 @@
     "parallels": [-18, -36],
     "rotate": [-134, 0, 0]
   },
+  "params": [
+  {
+    "name": "Style_Dropdown",
+    "bind": {
+      "input": "select",
+      "options": [null, "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
+      "labels": ["Show All", "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
+      "name": "Select Architectural Era: "
+    }
+  }
+],
   "layer": [
     {
       "data": {
@@ -39,7 +50,8 @@
         {
           "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
           "as": "Broad_Style"
-        }
+        },
+        {"filter": "Style_Dropdown == null || datum.Broad_Style == Style_Dropdown"}
       ],
       "encoding": {
         "longitude": {

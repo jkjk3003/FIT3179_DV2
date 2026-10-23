@@ -39,9 +39,8 @@
     "y": {
       "aggregate": "count",
       "type": "quantitative",
-      "stack": "center",
-      "axis": null,
-      "title": "Number of Buildings"
+      "stack": "zero",
+      "axis": {"title": "Number of Events"}
     },
     "color": {
       "field": "Broad_Style",

@@ -22,7 +22,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 1200px; /* Prevents horizontal scrolling on laptops */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background-color: white;
@@ -71,14 +71,14 @@
     <h1 style="text-align: center;">Preserving the Past, Building the Future</h1>
     <p class="subtitle">An exploration of Australia's architectural heritage and modern housing booms.</p>
 
-    <!-- Section 1: Spatial Distribution (Maps) -->
+    <!-- Section 1: Spatial Distribution (Maps & Rankings) -->
     <div class="section-container">
         <h2>1. The Geography of Australian Heritage</h2>
         <div class="pure-g">
             <div class="pure-u-1-1 pure-u-md-1-3 text-column">
                 <h3>Density and Protection</h3>
-                <p>Australia is a vast continent, but its historical footprint is unevenly distributed. When adjusting for population, island states like Tasmania show a highly concentrated density of historical sites (Graph 2).</p>
-                <p>However, when looking at the physical land protected (Graph 5), mainland states like New South Wales dedicate massive hectares of land to heritage conservation.</p>
+                <p>Australia is a vast continent, but its historical footprint is unevenly distributed. When adjusting for population, island states like Tasmania show a highly concentrated density of historical sites.</p>
+                <p>However, when looking at the physical land protected, mainland states like New South Wales dedicate massive hectares of land to heritage conservation.</p>
             </div>
             <div class="pure-u-1-1 pure-u-md-2-3">
                 <div id="vis2" class="vis-container"></div> <!-- Normalized Choropleth -->
@@ -91,6 +91,17 @@
             </div>
             <div class="pure-u-1-1 pure-u-md-1-2">
                 <div id="vis3" class="vis-container"></div> <!-- Dot Density Map -->
+            </div>
+        </div>
+
+        <!-- Graph 9: Sorted Horizontal Bar Chart Added Here -->
+        <div class="pure-g" style="margin-top: 30px;">
+            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
+                <h3>State Rankings</h3>
+                <p>When ranked by absolute volume, Victoria contains the most individual heritage sites. However, the deep blue gradient reveals that New South Wales leads significantly in total protected area, prioritizing massive historical reserves over numerous smaller sites.</p>
+            </div>
+            <div class="pure-u-1-1 pure-u-md-2-3">
+                <div id="vis9" class="vis-container"></div> <!-- Horizontal Bar Chart -->
             </div>
         </div>
     </div>
@@ -116,12 +127,12 @@
     </div>
 
     <!-- Section 3: Modern Housing Trends -->
-    <div class="section-container">
+    <div class="section-container" style="border-bottom: none;">
         <h2>3. The Modern Construction Boom</h2>
         <div class="pure-g">
             <div class="pure-u-1-1 pure-u-md-1-3 text-column">
                 <h3>State Comparisons</h3>
-                <p>Transitioning from historical heritage to modern housing, data from 1983 onwards reveals cyclical construction booms. Victoria eventually outpaced New South Wales in raw housing approvals (Graph 7).</p>
+                <p>Transitioning from historical heritage to modern housing, data from 1983 onwards reveals cyclical construction booms. Victoria eventually outpaced New South Wales in raw housing approvals.</p>
             </div>
             <div class="pure-u-1-1 pure-u-md-2-3">
                 <div id="vis7" class="vis-container"></div> <!-- NSW vs VIC Line Chart -->
@@ -131,6 +142,19 @@
         <div class="pure-g" style="margin-top: 30px;">
             <div class="pure-u-1-1">
                 <div id="vis4" class="vis-container"></div> <!-- Small Multiples Area Chart -->
+            </div>
+        </div>
+
+        <!-- Graph 10: Jitter Plot Added Here -->
+        <div class="pure-g" style="margin-top: 40px; align-items: center;">
+            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
+                <h3>Housing Market Volatility</h3>
+                <p>While some states maintain a steady rate of housing development, others experience massive economic booms and crashes. This interactive <strong>Jitter Plot</strong> reveals the true statistical distribution of monthly house approvals.</p>
+                <p>Each individual dot represents a single month of approvals. Tight, dense clusters indicate highly consistent development. Conversely, wide horizontal spreads highlight erratic markets prone to sudden spikes and dips.</p>
+                <p><em>Use the dropdown menu to isolate a specific state, and adjust the time slider to track how market stability has shifted.</em></p>
+            </div>
+            <div class="pure-u-1-1 pure-u-md-2-3">
+                <div id="vis10" class="vis-container"></div> <!-- Jitter Plot -->
             </div>
         </div>
     </div>
@@ -144,19 +168,24 @@
 </div>
 
 <script type="text/javascript">
-    // Embed the maps
-    vegaEmbed('#vis2', 'Graph2.vg.json').catch(console.error);
-    vegaEmbed('#vis5', 'Graph5.vg.json').catch(console.error);
-    vegaEmbed('#vis3', 'Graph3.vg.json').catch(console.error);
+    // Add "actions: false" to keep the dashboard looking clean and remove the [...] button
+    const opt = { "actions": false };
+
+    // Embed the maps & rankings
+    vegaEmbed('#vis2', 'Graph2.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis5', 'Graph5.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis3', 'Graph3.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis9', 'Graph9.vg.json', opt).catch(console.error);
     
     // Embed the timeline and style charts
-    vegaEmbed('#vis1', 'Graph1.json').catch(console.error);
-    vegaEmbed('#vis8', 'Graph8.vg.json').catch(console.error);
-    vegaEmbed('#vis6', 'Graph6.vg.json').catch(console.error);
+    vegaEmbed('#vis1', 'Graph1.json', opt).catch(console.error);
+    vegaEmbed('#vis8', 'Graph8.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis6', 'Graph6.vg.json', opt).catch(console.error);
     
     // Embed the modern housing charts
-    vegaEmbed('#vis7', 'Graph7.vg.json').catch(console.error);
-    vegaEmbed('#vis4', 'Graph4.vg.json').catch(console.error);
+    vegaEmbed('#vis7', 'Graph7.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis4', 'Graph4.vg.json', opt).catch(console.error);
+    vegaEmbed('#vis10', 'Graph10.vg.json', opt).catch(console.error);
 </script>
 
 </body>

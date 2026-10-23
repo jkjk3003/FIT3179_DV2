@@ -1,0 +1,86 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "title": "Correlation: State Population vs. Heritage Sites",
+  "data": {
+    "url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"
+    },
+    {
+      "aggregate": [
+        {"op": "count", "as": "Building_Count"},
+        {"op": "sum", "field": "AREA_HA", "as": "Total_Area"}
+      ],
+      "groupby": ["STATE"]
+    },
+    {
+      "lookup": "STATE",
+      "from": {
+        "data": {
+          "values": [
+            {"STATE": "NSW", "Population": 8337700, "Full_Name": "New South Wales"},
+            {"STATE": "VIC", "Population": 6812500, "Full_Name": "Victoria"},
+            {"STATE": "QLD", "Population": 5458000, "Full_Name": "Queensland"},
+            {"STATE": "SA",  "Population": 1851200, "Full_Name": "South Australia"},
+            {"STATE": "WA",  "Population": 2878600, "Full_Name": "Western Australia"},
+            {"STATE": "TAS", "Population": 573300,  "Full_Name": "Tasmania"},
+            {"STATE": "NT",  "Population": 252500,  "Full_Name": "Northern Territory"},
+            {"STATE": "ACT", "Population": 466800,  "Full_Name": "Australian Capital Territory"}
+          ]
+        },
+        "key": "STATE",
+        "fields": ["Population", "Full_Name"]
+      }
+    },
+    {
+      "filter": "datum.Full_Name != null"
+    }
+  ],
+  "params": [
+    {
+      "name": "bar_hover",
+      "select": {"type": "point", "on": "mouseover"}
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 4,
+    "stroke": "black",
+    "strokeWidth": 0.5
+  },
+  "encoding": {
+    "y": {
+      "field": "Full_Name",
+      "type": "nominal",
+      "title": null,
+      "sort": "-x", 
+      "axis": {"labelFontSize": 12}
+    },
+    "x": {
+      "field": "Building_Count",
+      "type": "quantitative",
+      "title": "Total Historic Sites",
+      "axis": {"grid": true}
+    },
+    "color": {
+      "field": "Total_Area",
+      "type": "quantitative",
+      "title": "Total Protected Area (HA)",
+      "scale": {"scheme": "blues"}
+    },
+    "opacity": {
+      "condition": {"param": "bar_hover", "empty": true, "value": 1},
+      "value": 0.3
+    },
+    "tooltip": [
+      {"field": "Full_Name", "type": "nominal", "title": "State"},
+      {"field": "Population", "type": "quantitative", "title": "Population", "format": ","},
+      {"field": "Building_Count", "type": "quantitative", "title": "Historic Sites"},
+      {"field": "Total_Area", "type": "quantitative", "title": "Total Area (HA)", "format": ",.0f"}
+    ]
+  }
+}

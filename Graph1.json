@@ -20,11 +20,22 @@
       "as": "Decade"
     }
   ],
+"params": [
+    {
+      "name": "style_highlight",
+      "select": {"type": "point", "on": "mouseover", "fields": ["Broad_Style"]}
+    }
+  ],
+
   "mark": {
     "type": "area",
     "interpolate": "monotone"
   },
   "encoding": {
+    "opacity": {
+      "condition": {"param": "style_highlight", "value": 1},
+      "value": 0.2
+    },
     "x": {
       "field": "Decade",
       "type": "quantitative",

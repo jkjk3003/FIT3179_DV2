@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 400,
-  "title": "Correlation: State Population vs. Heritage Sites",
   "data": {
     "url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"
   },
@@ -82,5 +85,11 @@
       {"field": "Building_Count", "type": "quantitative", "title": "Historic Sites"},
       {"field": "Total_Area", "type": "quantitative", "title": "Total Area (HA)", "format": ",.0f"}
     ]
+  },
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }

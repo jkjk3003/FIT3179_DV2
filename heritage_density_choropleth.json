@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 800,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 600,
-  "title": "Density of Historic Heritage Sites (per 100,000 residents)",
   "projection": {
     "type": "conicEqualArea",
     "parallels": [-18, -36],
@@ -98,5 +101,11 @@
         ]
       }
     }
-  ]
+  ],
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
+  }
 }

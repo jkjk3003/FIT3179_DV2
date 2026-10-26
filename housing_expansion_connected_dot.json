@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
+  "height": 400,
+  "data": {
+    "url": "cleaned_abs_houses.csv"
+  },
+  "transform": [
+    {
+      "calculate": "year(datum.Date)",
+      "as": "Year"
+    },
+    {
+      "filter": "datum.Year == 2000 || datum.Year == 2020"
+    },
+    {
+      "aggregate": [
+        {"op": "mean", "field": "Count", "as": "Average_Approvals"}
+      ],
+      "groupby": ["State", "Year"]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Average_Approvals",
+      "type": "quantitative",
+      "title": "Average Monthly House Approvals",
+      "axis": {"grid": true}
+    },
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "title": null,
+      "sort": "-x"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#b3b3b3",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "detail": {
+          "field": "State",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 150,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "Year",
+          "type": "nominal",
+          "title": "Year",
+          "scale": {
+            "domain": [2000, 2020],
+            "range": ["#1f77b4", "#ff7f0e"]
+          }
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Year", "type": "nominal", "title": "Year"},
+          {"field": "Average_Approvals", "type": "quantitative", "title": "Avg Approvals", "format": ",.0f"}
+        ]
+      }
+    }
+  ],
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

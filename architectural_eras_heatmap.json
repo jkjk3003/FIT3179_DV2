@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 300,
-  "title": "Construction Density of Architectural Styles by Decade",
   "data": {
     "url": "wikidata_heritage_styles.csv"
   },
@@ -47,5 +50,11 @@
       {"field": "Broad_Style", "type": "nominal", "title": "Style"},
       {"aggregate": "count", "type": "quantitative", "title": "Number of Buildings"}
     ]
+  },
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }

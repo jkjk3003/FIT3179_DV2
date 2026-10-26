@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 800,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 400,
-  "title": "Rise and Fall of Architectural Styles in Australia (1800 - 2000)",
   "data": {
     "url": "wikidata_heritage_styles.csv"
   },
@@ -63,5 +66,11 @@
       {"field": "Decade", "type": "quantitative", "title": "Decade"},
       {"aggregate": "count", "type": "quantitative", "title": "Buildings Constructed"}
     ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }

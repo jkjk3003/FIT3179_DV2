@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 700,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 400,
-  "title": "Private House Approvals Comparison: NSW vs. VIC (1983–2026)",
   "data": {
     "url": "cleaned_abs_houses.csv"
   },
@@ -42,5 +45,11 @@
       {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
       {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
     ]
+  },
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }

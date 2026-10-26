@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
+  "width": "container",
+  "autosize": {
+  "type": "fit",
+  "contains": "padding"
+},
   "height": 300,
-  "title": "Heritage Buildings Built by Century",
   "data": {
     "url": "wikidata_heritage_styles.csv"
   },
@@ -36,5 +39,11 @@
       {"field": "Century", "type": "nominal", "title": "Era"},
       {"aggregate": "count", "type": "quantitative", "title": "Total Buildings"}
     ]
+  },
+    "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }

@@ -107,6 +107,26 @@
           {"field": "Sites_per_100k", "type": "quantitative", "title": "Sites per 100k", "format": ".2f"}
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {"lon": 130.0, "lat": -43.0, "text": "Highest density in TAS"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#333333",
+        "align": "left",
+        "dx": 5
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "text", "type": "nominal"}
+      }
     }
   ],
   "config": {

@@ -44,7 +44,7 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e0e0e0",
+        "fill": "#F0F0F0",
         "stroke": "white",
         "strokeWidth": 1
       }
@@ -57,8 +57,7 @@
         "type": "circle",
         "size": 50,
         "opacity": 0.8,
-        "stroke": "black",
-        "strokeWidth": 0.5
+        "strokeWidth": 0
       },
       "transform": [
         {
@@ -80,9 +79,13 @@
         "color": {
           "field": "Broad_Style",
           "type": "nominal",
-          "title": "Architectural Era",
+          "title": null,
           "scale": {
             "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+          },
+          "legend": {
+            "orient": "bottom-left",
+            "direction": "horizontal"
           }
         },
         "tooltip": [
@@ -90,6 +93,26 @@
           {"field": "styleLabel", "type": "nominal", "title": "Style"},
           {"field": "year", "type": "quantitative", "title": "Year Built"}
         ]
+      }
+    },
+    {
+      "data": {"values": [{}]},
+      "transform": [
+        {"calculate": "Year_Slider", "as": "year_label"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "fontSize": 64,
+        "fontWeight": "bold",
+        "color": "#C28E5C",
+        "opacity": 0.4
+      },
+      "encoding": {
+        "x": {"value": 1000}, 
+        "y": {"value": 20},
+        "text": {"field": "year_label"}
       }
     }
   ],

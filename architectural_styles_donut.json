@@ -5,44 +5,76 @@
   "height": 300,
   "data": {"url": "wikidata_heritage_styles.csv"},
   "transform": [
+    {"filter": "datum.year >= 1800 && datum.year <= 2000"},
     {
       "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Federation') >= 0 ? 'Federation' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
       "as": "Broad_Style"
     },
-    {"filter": "datum.year >= 1800 && datum.year <= 2000"}
-  ],
-  "params": [
     {
-      "name": "slice_select",
-      "select": {"type": "point", "fields": ["Broad_Style"]}
-    }
+      "window": [{"op": "row_number", "as": "row_num"}],
+      "groupby": ["buildingLabel"]
+    },
+    {"filter": "datum.row_num == 1"}
   ],
-  "mark": {
-    "type": "arc", 
-    "innerRadius": 70, 
-    "stroke": "#F8F7F4", 
-    "strokeWidth": 2,
-    "cursor": "pointer"
-  },
   "encoding": {
-    "theta": {"aggregate": "count", "type": "quantitative"},
-    "color": {
+    "y": {
       "field": "Broad_Style",
       "type": "nominal",
-      "title": "Architectural Era",
-      "scale": {
-        "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+      "title": null,
+      "sort": "-x",
+      "axis": {"labelFontSize": 12, "labelFontWeight": "bold"}
+    },
+    "x": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Total Unique Buildings",
+      "axis": {"grid": true, "labelFontSize": 12, "titleFontSize": 12, "tickCount": 6}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "#d3d3d3"}
+    },
+    {
+      "params": [
+        {
+          "name": "bar_hover",
+          "select": {"type": "point", "on": "mouseover"}
+        }
+      ],
+      "mark": {"type": "circle", "size": 250, "opacity": 1, "cursor": "pointer"},
+      "encoding": {
+        "color": {
+          "field": "Broad_Style",
+          "type": "nominal",
+          "scale": {
+            "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+          },
+          "legend": null
+        },
+        "opacity": {
+          "condition": {"param": "bar_hover", "empty": true, "value": 1},
+          "value": 0.4
+        },
+        "tooltip": [
+          {"field": "Broad_Style", "type": "nominal", "title": "Style Era"},
+          {"aggregate": "count", "type": "quantitative", "title": "Total Buildings"}
+        ]
       }
     },
-    "opacity": {
-      "condition": {"param": "slice_select", "value": 1},
-      "value": 0.2
-    },
-    "tooltip": [
-      {"field": "Broad_Style", "type": "nominal", "title": "Style Era"},
-      {"aggregate": "count", "type": "quantitative", "title": "Total Buildings"}
-    ]
-  },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "font": "Inter",
+        "fontSize": 11
+      },
+      "encoding": {
+        "text": {"aggregate": "count", "type": "quantitative"}
+      }
+    }
+  ],
   "config": {
     "background": "transparent",
     "view": {"stroke": "transparent"}

@@ -63,7 +63,26 @@
           {"field": "Total_Area", "type": "quantitative", "title": "Total Area (HA)", "format": ",.0f"}
         ]
       }
-    }
+    },
+    {
+  "data": {
+    "values": [{"lon": 135.3, "lat": -29.1, "label": "Snowy Mountains Scheme (459k ha)"}]
+  },
+  "mark": {
+    "type": "text",
+    "align": "left",
+    "dx": 15,
+    "dy": -10,
+    "fontSize": 11,
+    "fontWeight": "bold",
+    "color": "#1A2C38"
+  },
+  "encoding": {
+    "longitude": {"field": "lon", "type": "quantitative"},
+    "latitude": {"field": "lat", "type": "quantitative"},
+    "text": {"field": "label", "type": "nominal"}
+  }
+}
 
 
   ],

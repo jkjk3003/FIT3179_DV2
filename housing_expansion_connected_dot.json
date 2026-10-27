@@ -65,7 +65,7 @@
           "title": "Year",
           "scale": {
             "domain": [2000, 2020],
-            "range": ["#1A2C38", "#C28E5C"]
+            "range": ["#9FB3C8", "#1A2C38"]
           }
         },
         "tooltip": [

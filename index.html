@@ -132,6 +132,55 @@
       font-size: 0.85rem;
       color: #777;
     }
+
+    /* Custom Slider Styling */
+    .vega-bindings input[type="range"] {
+      -webkit-appearance: none;
+      width: 250px; /* Makes the slider bar longer */
+      height: 12px; /* Makes the track thick like the example */
+      background: #E5E5E5; /* Light grey background track */
+      border-radius: 6px;
+      outline: none;
+      margin: 0 10px;
+    }
+    
+    /* The draggable handle (thumb) */
+    .vega-bindings input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent); /* Uses your existing #C28E5C root color */
+      cursor: pointer;
+    }
+
+    /* Aligns the slider and text neatly */
+    .vega-bindings label {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Custom Dropdown Styling */
+    .vega-bindings select {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 4px;
+      background-color: white;
+      color: var(--text-main);
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+    
+    .vega-bindings select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
   </style>
 </head>
 <body>
@@ -166,16 +215,16 @@
         </figure>
 
         <figure>
-          <h3>Mainland Conservation Footprints Dominate</h3>
-          <p class="chart-desc">Hover over a bubble to see the massive physical footprint of protected heritage land managed by mainland states compared to coastal territories.</p>
-          <div id="vis5" class="vis-container"></div>
-        </figure>
+        <h3>Mainland Conservation Footprints Dominate</h3>
+        <p class="chart-desc">Mainland states manage massive heritage footprints, though this is heavily skewed by massive individual reserves like NSW's Snowy Mountains Scheme. Circle area shows total hectares protected; hover to view the exact volume.</p>
+        <div id="vis5" class="vis-container"></div>
+      </figure>
       </div>
       <!-- END OF GRID WRAPPER -->
 
       <figure>
         <h3>Coastal Clusters Dominate Heritage Preservation</h3>
-        <p class="chart-desc">Most historic sites tightly cling to the eastern and south-eastern coastlines, perfectly mirroring early 19th-century settlement patterns. Hover over a cluster to view the site counts.</p>
+        <p class="chart-desc">Most historic sites sit along the eastern and south-eastern coastlines, strongly reflecting early 19th-century settlement patterns. Each point represents an individual site; hover over a cluster to view exact records.</p>
         <div id="vis3" class="vis-container"></div>
       </figure>
     </section>
@@ -186,20 +235,20 @@
       <p class="body-text">The expansion of Australian settlements during the 19th century—heavily influenced by British colonial rule—sparked a massive wave of Victorian and Gothic construction. The sites we successfully preserve today provide a direct archaeological record of these explosive, distinct construction periods.</p>
 
       <figure>
-        <h3>The 19th Century Victorian Building Boom</h3>
-        <p class="chart-desc">Victorian architecture dominates the historical timeline, peaking right before the turn of the 20th century. Click or hover over an architectural era in the legend to highlight its specific construction wave and fade out competing styles.</p>
+        <h3>Two Building Booms: The 1870s-80s and the 1930s</h3>
+        <p class="chart-desc">While bespoke and unclassified styles ("Other") make up the highest volume overall, specific named eras peaked in distinct waves. Click or hover over an architectural era in the legend to highlight its specific construction wave.</p>
         <div id="vis1" class="vis-container"></div>
       </figure>
 
       <figure>
-        <h3>Victorian Style Sweeps the South-East</h3>
-        <p class="chart-desc">Different states preserve distinctly different aesthetic histories. Hover over a region cell to see the precise density of specific architectural styles within that territory.</p>
+        <h3>The Rise and Fall of Architectural Eras</h3>
+        <p class="chart-desc">Different eras experienced distinct waves of popularity before fading out of fashion. Hover over a cell to see the precise number of buildings constructed for a specific architectural style during that decade.</p>
         <div id="vis8" class="vis-container"></div>
       </figure>
 
       <figure>
-        <h3>Federation and Victorian Styles Anchor Our Heritage</h3>
-        <p class="chart-desc">Over half of all preserved Australian architecture belongs to just two structural eras. Interact with the slices to filter the overall structural composition.</p>
+        <h3>The Dominance of Uncategorized Architecture</h3>
+        <p class="chart-desc">Over half of all preserved Australian architecture falls into bespoke or "Other" structural styles. Bar length shows the exact count of unique buildings preserved from each categorized era.</p>
         <div id="vis6" class="vis-container"></div>
       </figure>
     </section>
@@ -210,8 +259,8 @@
       <p class="body-text">Transitioning from historical heritage to modern housing, data from 1983 onwards reveals severe, cyclical construction booms. The market shifted dramatically in the 21st century, with Victoria heavily outpacing traditional powerhouses to rapidly expand its urban sprawl.</p>
 
       <figure>
-        <h3>Victoria Overtakes NSW in Housing Approvals</h3>
-        <p class="chart-desc">Drag your mouse across the timeline to filter specific decades of housing booms and highlight exactly when Victoria's development outpaced New South Wales.</p>
+        <h3>Victoria Commands the Modern Housing Market</h3>
+        <p class="chart-desc">While historical approvals were closely contested, Victoria has consistently led the nation in annual housing development since 1999. Drag your mouse across the timeline to filter specific decades.</p>
         <div id="vis7" class="vis-container"></div>
       </figure>
 
@@ -228,8 +277,8 @@
       </figure>
 
       <figure>
-        <h3>Boom and Bust: Housing Market Volatility</h3>
-        <p class="chart-desc">Each dot represents a single month of approvals. Tight clusters indicate consistent development, while wide horizontal spreads in NSW and VIC highlight highly erratic market swings. Hover over outlier dots to reveal the date and volume of historical development spikes.</p>
+        <h3>Volume Drives Market Spread</h3>
+        <p class="chart-desc">Each dot represents a single month of approvals. While NSW and VIC show wide horizontal spreads indicating heavy market swings, this volatility is largely a byproduct of their massive overall construction volume compared to smaller territories.</p>
         <div id="vis10" class="vis-container"></div>
         <figcaption>Source: Australian Bureau of Statistics (Building Approvals).</figcaption>
       </figure>
@@ -240,15 +289,16 @@
       <h2>About the data</h2>
       <ul>
         <li><strong>Normalization.</strong> Density metrics are calculated per 100,000 residents to allow fair comparisons between highly populated mainland states and smaller island territories.</li>
-        <li><strong>Architectural Eras.</strong> Construction styles were grouped into major structural eras (e.g., Victorian, Gothic, Federation) based on standard historical definitions and construction years.</li>
-        <li><strong>Housing Approvals.</strong> The modern building approvals dataset tracks raw monthly volume from 1983 onwards to capture modern economic cycles, market volatility, and urban construction spikes.</li>
+        <li><strong>Geographic Bias.</strong> Over 40% of the Wikidata heritage points are heavily clustered around Melbourne, meaning architectural counts reflect Wikidata's specific coverage gaps rather than a perfect national census.</li>
+        <li><strong>Housing Approvals.</strong> The modern building approvals dataset tracks raw monthly volume from 1983 onwards to capture modern economic cycles and market volatility.</li>
       </ul>
 
       <h2>Sources and credits</h2>
       <ul>
-        <li><strong>Australian National Heritage List Spatial Database.</strong> Used for historical site coordinates, architectural styles, and protected area physical boundaries.</li>
-        <li><strong>Australian Bureau of Statistics.</strong> Building Approvals data used for modern housing trends. National and state population data used for per capita density normalizations.</li>
-        <li>Built with Vega-Lite 5 and Vega 5. Typefaces: Inter and Merriweather (Google Fonts, SIL Open Font Licence).</li>
+        <li><strong>Wikidata Query Service (CC0).</strong> Sourced October 2026. Used for historical site coordinates, architectural styles, and building construction years.</li>
+        <li><strong>Australian National Heritage List Spatial Database.</strong> Used for protected area physical boundaries and state aggregation.</li>
+        <li><strong>Australian Bureau of Statistics.</strong> Building Approvals (8731.0) used for modern housing trends. National and state population data used for per capita density normalizations.</li>
+        <li>Built with Vega-Lite 5 and Vega 5. Typefaces: Inter and Merriweather (Google Fonts, SIL Open Font Licence). Text and code formatting refined with AI assistance.</li>
       </ul>
       
       <p class="footer-credits">© 2026 John Koh Jiakang. Created for FIT3179 Data Visualisation, Monash University, October 2026.</p>

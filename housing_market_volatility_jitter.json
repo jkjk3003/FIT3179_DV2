@@ -33,7 +33,9 @@
           "field": "Count",
           "type": "quantitative",
           "title": "Monthly House Approvals",
-          "axis": {"grid": true}
+          "axis": {
+      "tickCount": 6
+    }
         },
         "y": {
           "field": "State",

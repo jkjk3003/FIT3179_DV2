@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {"url": "cleaned_abs_houses.csv"},
   
-  "width": 380,
-  "height": 220,
+  "width": 220,
+  "height": 150,
 
   "mark": {
     "type": "area",
@@ -22,29 +22,35 @@
     "facet": {
       "field": "State",
       "type": "nominal",
-      "columns": 2,
+      "columns": 4,
       "title": null,
-      "header": {"labelFontSize": 12, "labelFontWeight": "bold"}
+      "header": {"labelFontSize": 13, "labelFontWeight": "bold"}
     },
     "x": {
       "field": "Date",
       "type": "temporal",
       "title": "Year",
-      "axis": {"grid": false}
+      "axis": {
+        "grid": false, 
+        "labelFontSize": 12, 
+        "titleFontSize": 12
+      }
     },
     "y": {
       "field": "Count",
       "type": "quantitative",
       "title": "Number of Houses",
-      "axis": {"grid": true}
+      "axis": {
+        "grid": true, 
+        "labelFontSize": 12, 
+        "titleFontSize": 12,
+        "tickCount": 4
+      }
     },
     "tooltip": [
       {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
       {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
     ]
-  },
-  "resolve": {
-    "scale": {"y": "independent"}
   },
   "config": {
     "background": "transparent",

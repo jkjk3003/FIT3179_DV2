@@ -35,7 +35,7 @@
       "aggregate": "count",
       "type": "quantitative",
       "stack": "zero",
-      "axis": {"title": "Number of Events"}
+      "axis": {"title": "Total Buildings Constructed"}
     },
     "color": {
       "field": "Broad_Style",

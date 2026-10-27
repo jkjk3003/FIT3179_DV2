@@ -1,192 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Australian Heritage & Housing Data</title>
-    
-    <!-- Pure.css for responsive grid layout -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
-    
-    <!-- Vega & Vega-Lite Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Australian Architecture Data Story</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-    <style>
-        /* Typography and Spacing (HD Rubric Requirement) */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            background-color: #fafafa;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .section-container {
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #eee;
-        }
-        .text-column {
-            padding: 20px;
-        }
-        .vis-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 15px;
-        }
-        .metadata {
-            text-align: center;
-            font-size: 0.9em;
-            color: #95a5a6;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #2c3e50;
-        }
-    </style>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+  <style>
+    :root {
+      --bg-color: #F8F7F4; 
+      --text-main: #333333;
+      --hero-bg: #1A2C38; 
+      --hero-text: #FFFFFF;
+      --accent: #C28E5C; 
+      --chart-desc: #555555;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      background-color: var(--bg-color);
+    }
+
+    h1, h2, h3 { font-family: 'Merriweather', serif; font-weight: 700; }
+
+    header {
+      background-color: var(--hero-bg);
+      color: var(--hero-text);
+      padding: 5rem 2rem 4rem;
+    }
+
+    .header-content { max-width: 1050px; margin: 0 auto; }
+    header h1 { font-size: 3.25rem; line-height: 1.15; margin-bottom: 1.5rem; }
+    header p.intro { font-size: 1.25rem; max-width: 720px; margin-bottom: 2rem; color: #E0E6ED; }
+    header p.byline { font-size: 0.9rem; color: #9FB3C8; }
+
+    main { max-width: 1050px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+    section { margin-bottom: 5rem; border-top: 3px solid var(--accent); padding-top: 2.5rem; }
+    section.no-border { border-top: none; padding-top: 0; }
+    section h2 { font-size: 2.1rem; color: var(--hero-bg); margin-bottom: 1.25rem; }
+    
+    /* Enforces strict line lengths (<= 10-12 words per line) for marker feedback */
+    p.body-text { margin-bottom: 2rem; max-width: 60ch; }
+
+/* Grid Layout for Desktop */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem 2rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (min-width: 900px) {
+      .chart-grid.two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+      .chart-grid.two-col figure {
+        margin: 0; /* Let grid gap handle spacing */
+      }
+    }
+
+    figure {
+      margin: 2.5rem 0 4rem 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    figure h3 { font-size: 1.4rem; color: var(--hero-bg); margin-bottom: 0.5rem; }
+    .chart-desc { font-size: 1rem; color: var(--chart-desc); margin-bottom: 1.5rem; flex-grow: 1; }
+    
+    .vis-container { 
+      width: 100%; 
+      display: block;
+      overflow: visible; 
+      margin-top: auto; /* Pushes chart to the bottom so side-by-side charts align */
+    }
+
+    figcaption { 
+      font-size: 0.85rem; 
+      color: #777; 
+      margin-top: 1rem; 
+      padding-top: 0.5rem; 
+      border-top: 1px solid #E5E5E5; 
+    }
+
+    /* Metadata and Sources Section */
+    .metadata-section {
+      border-top: 2px solid #E5E5E5;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    
+    .metadata-section h2 {
+      font-size: 1.6rem;
+      color: var(--hero-bg);
+      margin-bottom: 1rem;
+      border-top: none;
+      padding-top: 1.5rem;
+    }
+
+    .metadata-section ul {
+      list-style-type: disc;
+      margin-left: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .metadata-section li {
+      margin-bottom: 0.75rem;
+      max-width: 65ch;
+    }
+
+    .footer-credits {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #E5E5E5;
+      font-size: 0.85rem;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    
-    <!-- Title & Intro -->
-    <h1 style="text-align: center;">Preserving the Past, Building the Future</h1>
-    <p class="subtitle">An exploration of Australia's architectural heritage and modern housing booms.</p>
-
-    <!-- Section 1: Spatial Distribution (Maps & Rankings) -->
-    <div class="section-container">
-        <h2>1. The Geography of Australian Heritage</h2>
-        <div class="pure-g">
-            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
-                <h3>Density and Protection</h3>
-                <p>Australia is a vast continent, but its historical footprint is unevenly distributed. When adjusting for population, island states like Tasmania show a highly concentrated density of historical sites.</p>
-                <p>However, when looking at the physical land protected, mainland states like New South Wales dedicate massive hectares of land to heritage conservation.</p>
-            </div>
-            <div class="pure-u-1-1 pure-u-md-2-3">
-                <div id="vis2" class="vis-container"></div> <!-- Normalized Choropleth -->
-            </div>
-        </div>
-
-        <div class="pure-g">
-            <div class="pure-u-1-1 pure-u-md-1-2">
-                <div id="vis5" class="vis-container"></div> <!-- Proportional Area Map -->
-            </div>
-            <div class="pure-u-1-1 pure-u-md-1-2">
-                <div id="vis3" class="vis-container"></div> <!-- Dot Density Map -->
-            </div>
-        </div>
-
-        <!-- Graph 9: Sorted Horizontal Bar Chart Added Here -->
-        <div class="pure-g" style="margin-top: 30px;">
-            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
-                <h3>State Rankings</h3>
-                <p>When ranked by absolute volume, Victoria contains the most individual heritage sites. However, the deep blue gradient reveals that New South Wales leads significantly in total protected area, prioritizing massive historical reserves over numerous smaller sites.</p>
-            </div>
-            <div class="pure-u-1-1 pure-u-md-2-3">
-                <div id="vis9" class="vis-container"></div> <!-- Horizontal Bar Chart -->
-            </div>
-        </div>
+  <header>
+    <div class="header-content">
+      <h1>Preserving the Past, Building the Future</h1>
+      <p class="intro">An exploration of Australia's architectural heritage, contrasting the dense concentration of historical sites with the explosive sprawl of modern housing booms over the last century.</p>
+      <p class="byline">A data story by John Koh Jiakang, published October 2026. FIT3179 Data Visualisation.</p>
     </div>
+  </header>
+
+  <main>
+    <!-- Section 1: Spatial Distribution -->
+    <section class="no-border">
+      <h2>1. The Geography of Australian Heritage</h2>
+      <p class="body-text">Australia is a vast continent, but its historical footprint is unevenly distributed. When adjusting for population, island states like Tasmania show a highly concentrated density of historical sites, recording the highest sites-per-100k ratios in the nation. Conversely, mainland states dedicate massive hectares of physical land to heritage conservation, prioritizing sprawling reserves over smaller, individual architectural sites.</p>
+
+      <figure>
+        <h3>NSW Protects the Most Land, but Victoria Preserves the Most Sites</h3>
+        <p class="chart-desc">While Victoria contains the highest absolute volume of individual heritage sites, New South Wales leads significantly in total protected area. Hover over the bars to see exact state volume and area totals.</p>
+        <div id="vis9" class="vis-container"></div>
+        <figcaption>Source: Australian National Heritage List Spatial Database.</figcaption>
+      </figure>
+
+      <!-- WRAP YOUR TWO MAPS IN THIS GRID DIV -->
+      <div class="chart-grid two-col">
+        <figure>
+          <h3>Island States Lead in Heritage Density</h3>
+          <p class="chart-desc">Tasmania and surrounding island territories feature the highest concentration of preserved history per capita. Hover over any state to view its exact records per 100,000 residents.</p>
+          <div id="vis2" class="vis-container"></div>
+        </figure>
+
+        <figure>
+          <h3>Mainland Conservation Footprints Dominate</h3>
+          <p class="chart-desc">Hover over a bubble to see the massive physical footprint of protected heritage land managed by mainland states compared to coastal territories.</p>
+          <div id="vis5" class="vis-container"></div>
+        </figure>
+      </div>
+      <!-- END OF GRID WRAPPER -->
+
+      <figure>
+        <h3>Coastal Clusters Dominate Heritage Preservation</h3>
+        <p class="chart-desc">Most historic sites tightly cling to the eastern and south-eastern coastlines, perfectly mirroring early 19th-century settlement patterns. Hover over a cluster to view the site counts.</p>
+        <div id="vis3" class="vis-container"></div>
+      </figure>
+    </section>
 
     <!-- Section 2: Architectural Eras -->
-    <div class="section-container">
-        <h2>2. A Timeline of Style</h2>
-        <div class="pure-g">
-            <div class="pure-u-1-1">
-                <p style="padding: 0 20px;">The expansion of Australian settlements during the 19th century—heavily influenced by British colonial rule—sparked a massive wave of Victorian and Gothic construction.</p>
-                <div id="vis1" class="vis-container"></div> <!-- Streamgraph -->
-            </div>
-        </div>
+    <section>
+      <h2>2. A Timeline of Style</h2>
+      <p class="body-text">The expansion of Australian settlements during the 19th century—heavily influenced by British colonial rule—sparked a massive wave of Victorian and Gothic construction. The sites we successfully preserve today provide a direct archaeological record of these explosive, distinct construction periods.</p>
 
-        <div class="pure-g" style="margin-top: 30px;">
-            <div class="pure-u-1-1 pure-u-md-1-2">
-                <div id="vis8" class="vis-container"></div> <!-- Heatmap Matrix -->
-            </div>
-            <div class="pure-u-1-1 pure-u-md-1-2">
-                <div id="vis6" class="vis-container"></div> <!-- Donut Chart -->
-            </div>
-        </div>
-    </div>
+      <figure>
+        <h3>The 19th Century Victorian Building Boom</h3>
+        <p class="chart-desc">Victorian architecture dominates the historical timeline, peaking right before the turn of the 20th century. Click or hover over an architectural era in the legend to highlight its specific construction wave and fade out competing styles.</p>
+        <div id="vis1" class="vis-container"></div>
+      </figure>
+
+      <figure>
+        <h3>Victorian Style Sweeps the South-East</h3>
+        <p class="chart-desc">Different states preserve distinctly different aesthetic histories. Hover over a region cell to see the precise density of specific architectural styles within that territory.</p>
+        <div id="vis8" class="vis-container"></div>
+      </figure>
+
+      <figure>
+        <h3>Federation and Victorian Styles Anchor Our Heritage</h3>
+        <p class="chart-desc">Over half of all preserved Australian architecture belongs to just two structural eras. Interact with the slices to filter the overall structural composition.</p>
+        <div id="vis6" class="vis-container"></div>
+      </figure>
+    </section>
 
     <!-- Section 3: Modern Housing Trends -->
-    <div class="section-container" style="border-bottom: none;">
-        <h2>3. The Modern Construction Boom</h2>
-        <div class="pure-g">
-            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
-                <h3>State Comparisons</h3>
-                <p>Transitioning from historical heritage to modern housing, data from 1983 onwards reveals cyclical construction booms. Victoria eventually outpaced New South Wales in raw housing approvals.</p>
-            </div>
-            <div class="pure-u-1-1 pure-u-md-2-3">
-                <div id="vis7" class="vis-container"></div> <!-- NSW vs VIC Line Chart -->
-            </div>
-        </div>
-        
-        <div class="pure-g" style="margin-top: 30px;">
-            <div class="pure-u-1-1">
-                <div id="vis4" class="vis-container"></div> <!-- Small Multiples Area Chart -->
-            </div>
-        </div>
+    <section>
+      <h2>3. The Modern Construction Boom</h2>
+      <p class="body-text">Transitioning from historical heritage to modern housing, data from 1983 onwards reveals severe, cyclical construction booms. The market shifted dramatically in the 21st century, with Victoria heavily outpacing traditional powerhouses to rapidly expand its urban sprawl.</p>
 
-        <!-- Graph 10: Jitter Plot Added Here -->
-        <div class="pure-g" style="margin-top: 40px; align-items: center;">
-            <div class="pure-u-1-1 pure-u-md-1-3 text-column">
-                <h3>Housing Market Volatility</h3>
-                <p>While some states maintain a steady rate of housing development, others experience massive economic booms and crashes. This interactive <strong>Jitter Plot</strong> reveals the true statistical distribution of monthly house approvals.</p>
-                <p>Each individual dot represents a single month of approvals. Tight, dense clusters indicate highly consistent development. Conversely, wide horizontal spreads highlight erratic markets prone to sudden spikes and dips.</p>
-                <p><em>Use the dropdown menu to isolate a specific state, and adjust the time slider to track how market stability has shifted.</em></p>
-            </div>
-            <div class="pure-u-1-1 pure-u-md-2-3">
-                <div id="vis10" class="vis-container"></div> <!-- Jitter Plot -->
-            </div>
-        </div>
-    </div>
+      <figure>
+        <h3>Victoria Overtakes NSW in Housing Approvals</h3>
+        <p class="chart-desc">Drag your mouse across the timeline to filter specific decades of housing booms and highlight exactly when Victoria's development outpaced New South Wales.</p>
+        <div id="vis7" class="vis-container"></div>
+      </figure>
 
-    <!-- Metadata Section -->
-    <div class="metadata">
-        <p><strong>Author:</strong> John Koh Jiakang | <strong>Date:</strong> 25 October 2026</p>
-        <p><strong>Data Sources:</strong> Australian Bureau of Statistics (Building Approvals), Wikidata Query Service, Australian National Heritage List Spatial Database.</p>
-    </div>
+      <figure>
+        <h3>Divergent State Growth Curves</h3>
+        <p class="chart-desc">While eastern states experience aggressive, compounding growth surges, territories like the Northern Territory remain flat. Hover over individual trend lines for exact approval counts by year.</p>
+        <div id="vis4" class="vis-container"></div>
+      </figure>
 
-</div>
+      <figure>
+        <h3>The 20-Year Economic Shift: 2000 vs 2020</h3>
+        <p class="chart-desc">Comparing average monthly approvals from 2000 against 2020. Victoria aggressively widened the development gap between itself and New South Wales over these two decades.</p>
+        <div id="vis11" class="vis-container"></div>
+      </figure>
 
-<script type="text/javascript">
-    // Add "actions: false" to keep the dashboard looking clean and remove the [...] button
-    const opt = { "actions": false };
+      <figure>
+        <h3>Boom and Bust: Housing Market Volatility</h3>
+        <p class="chart-desc">Each dot represents a single month of approvals. Tight clusters indicate consistent development, while wide horizontal spreads in NSW and VIC highlight highly erratic market swings. Hover over outlier dots to reveal the date and volume of historical development spikes.</p>
+        <div id="vis10" class="vis-container"></div>
+        <figcaption>Source: Australian Bureau of Statistics (Building Approvals).</figcaption>
+      </figure>
+    </section>
 
-    // Embed the maps & rankings
-    vegaEmbed('#vis2', 'Graph2.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis5', 'Graph5.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis3', 'Graph3.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis9', 'Graph9.vg.json', opt).catch(console.error);
+    <!-- Metadata and Sources -->
+    <section class="metadata-section no-border">
+      <h2>About the data</h2>
+      <ul>
+        <li><strong>Normalization.</strong> Density metrics are calculated per 100,000 residents to allow fair comparisons between highly populated mainland states and smaller island territories.</li>
+        <li><strong>Architectural Eras.</strong> Construction styles were grouped into major structural eras (e.g., Victorian, Gothic, Federation) based on standard historical definitions and construction years.</li>
+        <li><strong>Housing Approvals.</strong> The modern building approvals dataset tracks raw monthly volume from 1983 onwards to capture modern economic cycles, market volatility, and urban construction spikes.</li>
+      </ul>
+
+      <h2>Sources and credits</h2>
+      <ul>
+        <li><strong>Australian National Heritage List Spatial Database.</strong> Used for historical site coordinates, architectural styles, and protected area physical boundaries.</li>
+        <li><strong>Australian Bureau of Statistics.</strong> Building Approvals data used for modern housing trends. National and state population data used for per capita density normalizations.</li>
+        <li>Built with Vega-Lite 5 and Vega 5. Typefaces: Inter and Merriweather (Google Fonts, SIL Open Font Licence).</li>
+      </ul>
+      
+      <p class="footer-credits">© 2026 John Koh Jiakang. Created for FIT3179 Data Visualisation, Monash University, October 2026.</p>
+    </section>
+  </main>
+
+  <script type="text/javascript">
+    // Setting responsive embed options with global Inter font injection
+    const opt = { 
+      "actions": false,
+      "renderer": "canvas",
+      "config": {
+        "font": "'Inter', sans-serif",
+        "axis": {
+          "labelFont": "'Inter', sans-serif",
+          "titleFont": "'Inter', sans-serif"
+        },
+        "header": {
+          "labelFont": "'Inter', sans-serif",
+          "titleFont": "'Inter', sans-serif"
+        },
+        "legend": {
+          "labelFont": "'Inter', sans-serif",
+          "titleFont": "'Inter', sans-serif"
+        },
+        "title": {
+          "font": "'Inter', sans-serif"
+        }
+      }
+    };
     
-    // Embed the timeline and style charts
-    vegaEmbed('#vis1', 'Graph1.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis8', 'Graph8.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis6', 'Graph6.vg.json', opt).catch(console.error);
+// Section 1: Spatial Distribution
+    vegaEmbed('#vis9', 'heritage_volume_vs_area_bar.json', opt).catch(console.error);
+    vegaEmbed('#vis2', 'heritage_density_choropleth.json', opt).catch(console.error);
+    vegaEmbed('#vis5', 'protected_area_proportional_map.json', opt).catch(console.error);
+    vegaEmbed('#vis3', 'heritage_dot_density_map.json', opt).catch(console.error);
     
-    // Embed the modern housing charts
-    vegaEmbed('#vis7', 'Graph7.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis4', 'Graph4.vg.json', opt).catch(console.error);
-    vegaEmbed('#vis10', 'Graph10.vg.json', opt).catch(console.error);
-</script>
-
+    // Section 2: Architectural Eras
+    vegaEmbed('#vis1', 'historical_construction_waves.json', opt).catch(console.error);
+    vegaEmbed('#vis8', 'architectural_eras_heatmap.json', opt).catch(console.error);
+    vegaEmbed('#vis6', 'architectural_styles_donut.json', opt).catch(console.error);
+    
+    // Section 3: Modern Housing Trends
+    vegaEmbed('#vis7', 'housing_approvals_line_chart.json', opt).catch(console.error);
+    vegaEmbed('#vis4', 'housing_approvals_small_multiples.json', opt).catch(console.error);
+    vegaEmbed('#vis11', 'housing_expansion_connected_dot.json', opt).catch(console.error);
+    vegaEmbed('#vis10', 'housing_market_volatility_jitter.json', opt).catch(console.error);
+  </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
   "width": "container",
   "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {"url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"},
+  "data": {"url": "data/National_Heritage_List_Spatial_Database.csv"},
   "transform": [
     {"filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"},
     {

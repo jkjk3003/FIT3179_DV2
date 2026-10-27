@@ -3,7 +3,7 @@
   "width": "container",
   "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {"url": "wikidata_heritage_styles.csv"},
+  "data": {"url": "data/wikidata_heritage_styles.csv"},
   "transform": [
     {
       "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",

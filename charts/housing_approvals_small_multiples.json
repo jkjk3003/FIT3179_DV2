@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {"url": "cleaned_abs_houses.csv"},
+  "data": {"url": "data/cleaned_abs_houses.csv"},
   
   "width": 220,
   "height": 150,

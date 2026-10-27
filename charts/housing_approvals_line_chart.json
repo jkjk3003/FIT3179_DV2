@@ -3,7 +3,7 @@
   "width": "container",
   "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {"url": "cleaned_abs_houses.csv"},
+  "data": {"url": "data/cleaned_abs_houses.csv"},
   "transform": [
     {"filter": "datum.State == 'New South Wales' || datum.State == 'Victoria'"}
   ],

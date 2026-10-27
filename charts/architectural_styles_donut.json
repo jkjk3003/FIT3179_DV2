@@ -3,7 +3,7 @@
   "width": "container",
   "autosize": {"type": "fit", "contains": "padding"},
   "height": 300,
-  "data": {"url": "wikidata_heritage_styles.csv"},
+  "data": {"url": "data/wikidata_heritage_styles.csv"},
   "transform": [
     {"filter": "datum.year >= 1800 && datum.year <= 2000"},
     {

@@ -7,7 +7,7 @@
 },
   "height": 400,
   "data": {
-    "url": "cleaned_abs_houses.csv"
+    "url": "data/cleaned_abs_houses.csv"
   },
   "transform": [
     {

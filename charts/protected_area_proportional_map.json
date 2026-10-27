@@ -13,13 +13,13 @@
   "layer": [
     {
       "data": {
-        "url": "australia_states.json",
+        "url": "charts/australia_states.json",
         "format": {"type": "topojson", "feature": "STE_2016_AUST"}
       },
       "mark": {"type": "geoshape", "fill": "#e0e0e0", "stroke": "white", "strokeWidth": 1}
     },
     {
-      "data": {"url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"},
+      "data": {"url": "data/National_Heritage_List_Spatial_Database.csv"},
       "transform": [
         {"filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"},
         {"aggregate": [{"op": "sum", "field": "AREA_HA", "as": "Total_Area"}], "groupby": ["STATE"]},

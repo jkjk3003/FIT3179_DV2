@@ -7,7 +7,7 @@
 },
   "height": 300,
   "data": {
-    "url": "wikidata_heritage_styles.csv"
+    "url": "data/wikidata_heritage_styles.csv"
   },
   "transform": [
     {

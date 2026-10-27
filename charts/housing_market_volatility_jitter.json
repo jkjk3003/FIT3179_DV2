@@ -3,7 +3,7 @@
   "width": "container",
   "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {"url": "cleaned_abs_houses.csv"},
+  "data": {"url": "data/cleaned_abs_houses.csv"},
   "params": [
     {
       "name": "Start_Year",

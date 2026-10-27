@@ -104,13 +104,13 @@
         "type": "text",
         "align": "right",
         "baseline": "top",
-        "fontSize": 64,
+        "fontSize": 63,
         "fontWeight": "bold",
         "color": "#C28E5C",
         "opacity": 0.4
       },
       "encoding": {
-        "x": {"value": 1000}, 
+        "x": {"value": 950}, 
         "y": {"value": 20},
         "text": {"field": "year_label"}
       }

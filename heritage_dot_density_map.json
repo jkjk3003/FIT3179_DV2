@@ -2,9 +2,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
+    "type": "fit",
+    "contains": "padding"
+  },
   "height": 600,
   "projection": {
     "type": "conicEqualArea",
@@ -12,27 +12,27 @@
     "rotate": [-134, 0, 0]
   },
   "params": [
-  {
-    "name": "Style_Dropdown",
-    "bind": {
-      "input": "select",
-      "options": [null, "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
-      "labels": ["Show All", "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
-      "name": "Select Architectural Era: "
+    {
+      "name": "Style_Dropdown",
+      "bind": {
+        "input": "select",
+        "options": [null, "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
+        "labels": ["Show All", "Gothic", "Art Deco", "Georgian", "Victorian", "Classical", "Other"],
+        "name": "Select Architectural Era: "
+      }
+    },
+    {
+      "name": "Year_Slider",
+      "value": 1800,
+      "bind": {
+        "input": "range",
+        "min": 1800,
+        "max": 2000,
+        "step": 10,
+        "name": "Minimum Year Built: "
+      }
     }
-  },
-  {
-  "name": "Year_Slider",
-  "value": 1800,
-  "bind": {
-    "input": "range",
-    "min": 1800,
-    "max": 2000,
-    "step": 10,
-    "name": "Minimum Year Built: "
-  }
-}
-],
+  ],
   "layer": [
     {
       "data": {
@@ -80,7 +80,10 @@
         "color": {
           "field": "Broad_Style",
           "type": "nominal",
-          "title": "Architectural Era"
+          "title": "Architectural Era",
+          "scale": {
+            "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+          }
         },
         "tooltip": [
           {"field": "buildingLabel", "type": "nominal", "title": "Building Name"},
@@ -90,7 +93,7 @@
       }
     }
   ],
-    "config": {
+  "config": {
     "background": "transparent",
     "view": {
       "stroke": "transparent"

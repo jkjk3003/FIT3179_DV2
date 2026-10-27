@@ -1,15 +1,17 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
   "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
-  "height": 600,
+    "type": "fit",
+    "contains": "padding"
+  },
+  "width": 500,
+  "height": 500,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [-18, -36],
-    "rotate": [-134, 0, 0]
+    "rotate": [-134, 0, 0],
+    "scale": 700,
+    "center": [0, -28]
   },
   "layer": [
     {
@@ -91,7 +93,12 @@
           "field": "Sites_per_100k",
           "type": "quantitative",
           "title": "Sites per 100k People",
-          "scale": {"scheme": "oranges"}
+          "scale": {"range": ["#E5E5E5", "#C28E5C"]},
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "titleAnchor": "middle"
+          }
         },
         "tooltip": [
           {"field": "Full_Name", "type": "nominal", "title": "State/Territory"},
@@ -102,7 +109,7 @@
       }
     }
   ],
-    "config": {
+  "config": {
     "background": "transparent",
     "view": {
       "stroke": "transparent"

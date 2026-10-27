@@ -1,39 +1,24 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
+  "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {
-    "url": "wikidata_heritage_styles.csv"
-  },
+  "data": {"url": "wikidata_heritage_styles.csv"},
   "transform": [
     {
       "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
       "as": "Broad_Style"
     },
-    {
-      "filter": "datum.year >= 1800 && datum.year <= 2000"
-    },
-    {
-      "bin": {"step": 10},
-      "field": "year",
-      "as": "Decade"
-    }
+    {"filter": "datum.year >= 1800 && datum.year <= 2000"},
+    {"bin": {"step": 10}, "field": "year", "as": "Decade"}
   ],
-"params": [
+  "params": [
     {
       "name": "style_highlight",
       "select": {"type": "point", "on": "mouseover", "fields": ["Broad_Style"]}
     }
   ],
-
-  "mark": {
-    "type": "area",
-    "interpolate": "monotone"
-  },
+  "mark": {"type": "area", "interpolate": "monotone"},
   "encoding": {
     "opacity": {
       "condition": {"param": "style_highlight", "value": 1},
@@ -43,11 +28,7 @@
       "field": "Decade",
       "type": "quantitative",
       "title": "Decade Built",
-      "axis": {
-        "format": "d",
-        "tickCount": 10,
-        "grid": false
-      },
+      "axis": {"format": "d", "tickCount": 10, "grid": false},
       "scale": {"zero": false}
     },
     "y": {
@@ -59,7 +40,10 @@
     "color": {
       "field": "Broad_Style",
       "type": "nominal",
-      "title": "Architectural Era"
+      "title": "Architectural Era",
+      "scale": {
+        "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+      }
     },
     "tooltip": [
       {"field": "Broad_Style", "type": "nominal", "title": "Style Era"},
@@ -69,8 +53,6 @@
   },
   "config": {
     "background": "transparent",
-    "view": {
-      "stroke": "transparent"
-    }
+    "view": {"stroke": "transparent"}
   }
 }

@@ -1,96 +1,91 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
+  "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {
-    "url": "cleaned_abs_houses.csv"
-  },
+  "data": {"url": "cleaned_abs_houses.csv"},
   "params": [
     {
       "name": "Start_Year",
       "value": 1983,
-      "bind": {
-        "input": "range",
-        "min": 1983,
-        "max": 2026,
-        "step": 1,
-        "name": "Show data from Year: "
-      }
+      "bind": {"input": "range", "min": 1983, "max": 2026, "step": 1, "name": "Show data from Year: "}
     },
     {
       "name": "State_Selection",
       "bind": {
         "input": "select",
-        "options": [
-          null, 
-          "New South Wales", "Victoria", "Queensland", "Western Australia", 
-          "South Australia", "Tasmania", "Australian Capital Territory", "Northern Territory"
-        ],
-        "labels": [
-          "Show All", 
-          "New South Wales", "Victoria", "Queensland", "Western Australia", 
-          "South Australia", "Tasmania", "ACT", "Northern Territory"
-        ],
+        "options": [null, "New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia", "Tasmania", "Australian Capital Territory", "Northern Territory"],
+        "labels": ["Show All", "New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia", "Tasmania", "ACT", "Northern Territory"],
         "name": "Filter by State: "
       }
     }
   ],
-"transform": [
+  "transform": [
+    {"filter": "State_Selection == null || datum.State == State_Selection"},
+    {"filter": "year(datum.Date) >= Start_Year"},
+    {"calculate": "random()", "as": "jitter"}
+  ],
+  "layer": [
     {
-      "filter": "State_Selection == null || datum.State == State_Selection"
+      "mark": {"type": "circle", "size": 30, "opacity": 0.6, "stroke": "black", "strokeWidth": 0.2},
+      "encoding": {
+        "x": {
+          "field": "Count",
+          "type": "quantitative",
+          "title": "Monthly House Approvals",
+          "axis": {"grid": true}
+        },
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "title": null,
+          "sort": [
+            "Victoria", 
+            "New South Wales", 
+            "Queensland", 
+            "Western Australia", 
+            "South Australia", 
+            "Tasmania", 
+            "Australian Capital Territory", 
+            "Northern Territory"
+          ]
+        },
+        "yOffset": {"field": "jitter", "type": "quantitative"},
+        "color": {
+          "condition": [
+            {"test": "datum.State == 'Victoria'", "value": "#C28E5C"},
+            {"test": "datum.State == 'New South Wales'", "value": "#1A2C38"}
+          ],
+          "value": "#E5E5E5"
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
+          {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
+        ]
+      }
     },
     {
-      "filter": "year(datum.Date) >= Start_Year"
-    },
-    {
-      "calculate": "random()",
-      "as": "jitter"
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text", 
+        "align": "right", 
+        "dx": -10, 
+        "dy": -55, 
+        "font": "Inter", 
+        "fontSize": 12, 
+        "fontWeight": 400, 
+        "color": "#555555"
+      },
+      "encoding": {
+        "x": {"datum": 5000},
+        "y": {"datum": "Victoria"},
+        "text": {"value": "Record development peak"}
+      }
     }
   ],
-  "mark": {
-    "type": "circle",
-    "size": 30,
-    "opacity": 0.4,
-    "stroke": "black",
-    "strokeWidth": 0.2
-  },
-  "encoding": {
-    "x": {
-      "field": "Count",
-      "type": "quantitative",
-      "title": "Monthly House Approvals",
-      "axis": {"grid": true}
-    },
-    "y": {
-      "field": "State",
-      "type": "nominal",
-      "title": null,
-      "sort": {"op": "median", "field": "Count", "order": "descending"}
-    },
-    "yOffset": {
-      "field": "jitter",
-      "type": "quantitative"
-    },
-    "color": {
-      "field": "State",
-      "type": "nominal",
-      "legend": null,
-      "scale": {"scheme": "category10"}
-    },
-    "tooltip": [
-      {"field": "State", "type": "nominal", "title": "State"},
-      {"field": "Date", "type": "temporal", "format": "%b %Y", "title": "Month"},
-      {"field": "Count", "type": "quantitative", "title": "Houses Approved", "format": ","}
-    ]
-  },
-    "config": {
+  "config": {
     "background": "transparent",
-    "view": {
-      "stroke": "transparent"
-    }
+    "view": {"stroke": "transparent"}
   }
 }

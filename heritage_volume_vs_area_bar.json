@@ -1,18 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
+  "autosize": {"type": "fit", "contains": "padding"},
   "height": 400,
-  "data": {
-    "url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"
-  },
+  "data": {"url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"},
   "transform": [
-    {
-      "filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"
-    },
+    {"filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"},
     {
       "aggregate": [
         {"op": "count", "as": "Building_Count"},
@@ -39,22 +32,12 @@
         "fields": ["Population", "Full_Name"]
       }
     },
-    {
-      "filter": "datum.Full_Name != null"
-    }
+    {"filter": "datum.Full_Name != null"}
   ],
   "params": [
-    {
-      "name": "bar_hover",
-      "select": {"type": "point", "on": "mouseover"}
-    }
+    {"name": "bar_hover", "select": {"type": "point", "on": "mouseover"}}
   ],
-  "mark": {
-    "type": "bar",
-    "cornerRadiusEnd": 4,
-    "stroke": "black",
-    "strokeWidth": 0.5
-  },
+  "mark": {"type": "bar", "cornerRadiusEnd": 4, "stroke": "black", "strokeWidth": 0.5},
   "encoding": {
     "y": {
       "field": "Full_Name",
@@ -73,7 +56,7 @@
       "field": "Total_Area",
       "type": "quantitative",
       "title": "Total Protected Area (HA)",
-      "scale": {"scheme": "blues"}
+      "scale": {"range": ["#E5E5E5", "#1A2C38"]}
     },
     "opacity": {
       "condition": {"param": "bar_hover", "empty": true, "value": 1},
@@ -86,10 +69,8 @@
       {"field": "Total_Area", "type": "quantitative", "title": "Total Area (HA)", "format": ",.0f"}
     ]
   },
-    "config": {
+  "config": {
     "background": "transparent",
-    "view": {
-      "stroke": "transparent"
-    }
+    "view": {"stroke": "transparent"}
   }
 }

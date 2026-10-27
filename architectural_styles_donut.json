@@ -1,49 +1,50 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
+  "autosize": {"type": "fit", "contains": "padding"},
   "height": 300,
-  "data": {
-    "url": "wikidata_heritage_styles.csv"
-  },
+  "data": {"url": "wikidata_heritage_styles.csv"},
   "transform": [
     {
-      "filter": "datum.year >= 1800 && datum.year <= 1999"
+      "calculate": "indexof(datum.styleLabel, 'Gothic') >= 0 ? 'Gothic' : indexof(datum.styleLabel, 'Art Deco') >= 0 ? 'Art Deco' : indexof(datum.styleLabel, 'Georgian') >= 0 ? 'Georgian' : indexof(datum.styleLabel, 'Victorian') >= 0 ? 'Victorian' : indexof(datum.styleLabel, 'Federation') >= 0 ? 'Federation' : indexof(datum.styleLabel, 'Classical') >= 0 || indexof(datum.styleLabel, 'Doric') >= 0 ? 'Classical' : 'Other'",
+      "as": "Broad_Style"
     },
+    {"filter": "datum.year >= 1800 && datum.year <= 2000"}
+  ],
+  "params": [
     {
-      "calculate": "datum.year < 1900 ? '19th Century (1800s)' : '20th Century (1900s)'",
-      "as": "Century"
+      "name": "slice_select",
+      "select": {"type": "point", "fields": ["Broad_Style"]}
     }
   ],
   "mark": {
-    "type": "arc",
-    "innerRadius": 70,
-    "stroke": "#fff",
-    "strokeWidth": 2
+    "type": "arc", 
+    "innerRadius": 70, 
+    "stroke": "#F8F7F4", 
+    "strokeWidth": 2,
+    "cursor": "pointer"
   },
   "encoding": {
-    "theta": {
-      "aggregate": "count",
-      "type": "quantitative"
-    },
+    "theta": {"aggregate": "count", "type": "quantitative"},
     "color": {
-      "field": "Century",
+      "field": "Broad_Style",
       "type": "nominal",
-      "title": "Era Built",
-      "scale": {"scheme": "dark2"}
+      "title": "Architectural Era",
+      "scale": {
+        "range": ["#56B4E9", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+      }
+    },
+    "opacity": {
+      "condition": {"param": "slice_select", "value": 1},
+      "value": 0.2
     },
     "tooltip": [
-      {"field": "Century", "type": "nominal", "title": "Era"},
+      {"field": "Broad_Style", "type": "nominal", "title": "Style Era"},
       {"aggregate": "count", "type": "quantitative", "title": "Total Buildings"}
     ]
   },
-    "config": {
+  "config": {
     "background": "transparent",
-    "view": {
-      "stroke": "transparent"
-    }
+    "view": {"stroke": "transparent"}
   }
 }

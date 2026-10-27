@@ -43,7 +43,7 @@
       "aggregate": "count",
       "type": "quantitative",
       "title": "Buildings Built",
-      "scale": {"scheme": "tealblues"}
+      "scale": {"range": ["#E5E5E5", "#1A2C38"]}
     },
     "tooltip": [
       {"field": "Decade", "type": "ordinal", "title": "Decade"},

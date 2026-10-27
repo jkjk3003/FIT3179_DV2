@@ -1,44 +1,28 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "autosize": {
-  "type": "fit",
-  "contains": "padding"
-},
-  "height": 600,
+  "autosize": {"type": "fit", "contains": "padding"},
+  "width": 500,
+  "height": 500,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [-18, -36],
-    "rotate": [-134, 0, 0]
+    "rotate": [-134, 0, 0],
+    "scale": 700,
+    "center": [0, -28]
   },
   "layer": [
     {
       "data": {
         "url": "australia_states.json",
-        "format": {
-          "type": "topojson",
-          "feature": "STE_2016_AUST"
-        }
+        "format": {"type": "topojson", "feature": "STE_2016_AUST"}
       },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#e0e0e0",
-        "stroke": "white",
-        "strokeWidth": 1
-      }
+      "mark": {"type": "geoshape", "fill": "#e0e0e0", "stroke": "white", "strokeWidth": 1}
     },
     {
-      "data": {
-        "url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"
-      },
+      "data": {"url": "National_Heritage_List_Spatial_Database_(NHL)_-_public.csv"},
       "transform": [
-        {
-          "filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"
-        },
-        {
-          "aggregate": [{"op": "sum", "field": "AREA_HA", "as": "Total_Area"}],
-          "groupby": ["STATE"]
-        },
+        {"filter": "datum.CLASS == 'Historic' && datum.STATUS == 'Listed place'"},
+        {"aggregate": [{"op": "sum", "field": "AREA_HA", "as": "Total_Area"}], "groupby": ["STATE"]},
         {
           "lookup": "STATE",
           "from": {
@@ -58,31 +42,21 @@
             "fields": ["lon", "lat", "State_Name"]
           }
         },
-        {
-          "filter": "datum.lon != null && datum.lat != null"
-        }
+        {"filter": "datum.lon != null && datum.lat != null"}
       ],
-      "mark": {
-        "type": "circle",
-        "color": "#8b0000",
-        "opacity": 0.6,
-        "stroke": "black",
-        "strokeWidth": 1
-      },
+      "mark": {"type": "circle", "color": "#C28E5C", "opacity": 0.8, "stroke": "black", "strokeWidth": 1},
       "encoding": {
-        "longitude": {
-          "field": "lon",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        },
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
           "field": "Total_Area",
           "type": "quantitative",
           "title": "Protected Area (Hectares)",
-          "scale": {"range": [100, 3000]}
+          "scale": {"range": [100, 3000]},
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
         },
         "tooltip": [
           {"field": "State_Name", "type": "nominal", "title": "State"},
@@ -90,11 +64,11 @@
         ]
       }
     }
+
+
   ],
-    "config": {
+  "config": {
     "background": "transparent",
-    "view": {
-      "stroke": "transparent"
-    }
+    "view": {"stroke": "transparent"}
   }
 }
